@@ -121,11 +121,27 @@ From this question we can see that the system is being attacked by a botnet, mea
 Looking at the results again
 <img width="1424" height="729" alt="Screenshot 2026-04-05 at 1 36 20 PM" src="https://github.com/user-attachments/assets/e383bcfd-105f-4e53-a5ca-6c0af1edfb76" />
 
-We see that the ip address 193.46.255.33 was trying to access user root.
-We also notice that same ip address accessing user sol. Even though the ip address 
+We see that the ip address 193.46.255.33 was trying to access user root multiple times in a short amount of time.
+We can add the user "root" to our list
+
+We also notice that same ip address accessing user sol. Even though there was only one attempt, from the analysis we can conclude that the ip address is part of the botnet.
+We can the user "sol" to the list.
 
 We also see that the 80.94.95.112 is making multiple attempts to the same user (roy) in a short ammount of time.
-We will add roy to the list.
+We will add "roy" to the list.
+
+Looking at the later events
+<img width="1418" height="725" alt="Screenshot 2026-04-05 at 2 06 13 PM" src="https://github.com/user-attachments/assets/139c36c1-748f-48fc-9523-bcf39b71fe67" />
+
+We can see 80.94.95.112 is making multiple attempts to the user user in a short ammount of time.
+We will add "user" to the list
+
+We have found our four users
+
+Answer: root, roy, sol, user
+
+Question 3 - Which four users did the botnet attempt to breach?
+<br />
 
 
 
