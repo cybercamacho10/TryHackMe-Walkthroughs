@@ -13,7 +13,6 @@ I hope this walkthorugh will help you clear any confusion regarding this room an
 Let's Begin!
 
 <h2>Task 1 - Introduction</h2>
-<br>
 Linux is still used in our networks, therefore they are a major means which they get attacked. 
 We must be ready to detect any inital access techniques in our linux system 
 
@@ -21,12 +20,11 @@ It is important you have knowledge of the MITRE Att&ck framework, Linux commands
 It is reccomended to have completed these rooms before continuing with this room
 
 <h3>Questions:</h3>
-<br />
-Question 1 - Read the Question Above
-<br />
-A: No answer needed
 
-Task 2 - Initial Access via SSH
+<h4>Question 1 - Read the Question Above</h4>
+<h5>Answer: No answer needed</h5>
+
+<h2>Task 2 - Initial Access via SSH</h2>h2>
 In this task, we learn that SSH is a very widely used service that allows users to connect remotely. 
 However it can be used by attackers to gain access to our systems.
 
@@ -75,7 +73,7 @@ You will see at the bottom of the screenshot a succesful authentication via pass
 <img width="1422" height="311" alt="Screenshot 2026-04-04 at 7 21 57 PM" src="https://github.com/user-attachments/assets/93adaa7c-44c4-4c7c-9840-f90c36909d98" />
 Answer: YEA
 
-Task 3 - Detecting SSH Attacks
+<h2>Task 3 - Detecting SSH Attacks</h2>
 We have seen how a sucessful SSH login looks like. Now, we will learn how to detect whether a login is malicious or not.
 
 The key to figure out is by looking at the context and correlation of other logs.
@@ -159,7 +157,7 @@ cat /var/log/auth.log | grep "ssh" | grep -i "failed"
 
 Answer: 91.224.92.79
 
-Task 4 - Initial Access via Services
+<h2>Task 4 - Initial Access via Services</h2>
 
 Not only do attackers use SSH to gain initial access to your system. but also through services.
 In order to check for a potential, we are going to have to analyze logs related to our services, like our web servers.
@@ -204,7 +202,7 @@ This question is pretty simple. It could be confusing in where to start to look 
 
 Answer: THM{i_am_vulnerable!}
 
-Task 5 - Detecting Service Breach
+<h2>Task 5 - Detecting Service Breach</h2>
 This task focuses on learning to use process analysis in order to analyze an attacker's potential initial access.
 Application logs are not always available, it best to rely on process tree analysis.
 A process tree is a hierarchical view of how process started (spawned) which other process.
@@ -270,7 +268,7 @@ In fact, we can see the full command in the image in Task 4, Question 1.
 
 Answer: Python
 
-Task 7 - Advanced Initial Access
+<h2>Task 6 - Advanced Initial Access</h2>
 
 THM teaches that even though it is not as common for phishing and USB attacks to be succesful compared to windows, we still need to be aware of it.
 
@@ -289,11 +287,13 @@ Answer: Supply Chain Compromise
 Question 2 - Which detection method can you use to detect a variety of Initial Access techniques?
 Answer: Process Tree Analysis 
 
-Conclusion
+<h2>Conclusion</h2>
 
 In this room we learened:
-* Analysis on authentication logs 
+* Analysis on authentication logs looking for initial access through services and ssh
 * Process Tree Analysis
+* Advanced Initial Access Techniques
+  
 Hope this walkthrough was helpful!
 
     
