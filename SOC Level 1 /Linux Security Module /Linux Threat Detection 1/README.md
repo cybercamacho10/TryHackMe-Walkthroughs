@@ -74,7 +74,61 @@ Answer: YEA
 
 Task 3 - Detecting SSH Attacks
 We have seen how a sucessful SSH login looks like. Now, we will learn how to detect whether a login is malicious or not.
-The key to figure out is by looking at the context.
-With Alice, she used a key which as we have seen is safer than using a password method.
+
+The key to figure out is by looking at the context and correlation of other logs.
+
+In the figured labeled Successful SSH Logins. With the ansible login, we can see that she used a key, which as we have seen is safer than using a password method. You can also analyze that the login was made from an internal ip address.
+However, with the other logs for jsmith, we can analyze that a password authentication and an external ip address was used which raises a red flag.
+
+We will practice this answering the questions on this task.
+
+Questions:
+<br />
+Question 1 - When did the SSH password brute force start?
+<br />
+Answer Format: 2023-09-15.
+
+This question tells us that we are analyzing an SSH brute force attack.
+
+To recap, a brute force attack is an authentication attack where an attacker attempts to gain access by systematically trying multiple password combinations. This attack typically happens in an automated manner.
+
+Brute force attacks can be identified in logs by:
+* Repeated failed login attempts within a short period of time
+* Multiple authentication attempts originating from the same IP address
+* Attempts targeting one or multiple user accounts
+* High-frequency login attempts indicating automation
+
+With this in mind, we now know what we are looking for.
+
+To analyze the logs, remember we will need to look at the auth.log logs since we are looking for authorization and authentication activity.
+
+Since a characteristic of a brute force attack is a lot of failed login attempts, let us grep for "failed"
+
+<img width="1421" height="726" alt="Screenshot 2026-04-05 at 1 28 38 PM" src="https://github.com/user-attachments/assets/86d031c0-8b0a-48cc-ba62-261f4b831eb3" />
+
+We can analyze that there are multiple failed attempts in a short amount of time from the 193.46.255.33 ip address.
+
+We can see that there is a Failed Password attempt from 197.39.195.136, but the brute force attack did not begin here. This attempt is not part of the brute force attack since there is only one attempt in a short amount of time. 
+
+Answer: 2025-08-21
+
+Question 2 - Which four users did the botnet attempt to breach?
+<br />
+Answer Format: Separate by a comma, in alphabetical order.
+
+From this question we can see that the system is being attacked by a botnet, meaning that the attacker is using multiple ip addresses to brute force.
+
+Looking at the results again
+<img width="1424" height="729" alt="Screenshot 2026-04-05 at 1 36 20 PM" src="https://github.com/user-attachments/assets/e383bcfd-105f-4e53-a5ca-6c0af1edfb76" />
+
+We see that the ip address 193.46.255.33 was trying to access user root.
+We also notice that same ip address accessing user sol. Even though the ip address 
+
+We also see that the 80.94.95.112 is making multiple attempts to the same user (roy) in a short ammount of time.
+We will add roy to the list.
+
+
+
+
 
     
