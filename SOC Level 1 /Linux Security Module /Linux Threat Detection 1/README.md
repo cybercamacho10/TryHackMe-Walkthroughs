@@ -202,7 +202,60 @@ This question is pretty simple. It could be confusing in where to start to look 
 Answer: THM{i_am_vulnerable!}
 
 Task 5 - Detecting Service Breach
-This task focuses on learning to use process analysis in order to
+This task focuses on learning to use process analysis in order to analyze an attacker's potential initial access.
+Application logs are not always available, it best to rely on process tree analysis.
+A process tree is a hierarchical view of how process started (spawned) which other process.
+This relationship is often described as a parent / child relationship that when you zoom out and see the whole relationships formed, it looks like a family tree, hence the name the process tree.
+
+We will use ausearch to look through audit daemon logs we looked at the previous room where it focuses on analyzing system calls.
+Two values of a audit log file is: PROCTITLE AND SYSCALL
+The PROCTITLE and SYSCALL records represent the same process execution event. 
+* The PROCTITLE provides the human-readable command that a user wrote
+* The SYSCALL entry shows the underlying system call (execve) used to execute that command, along with metadata such as process ID, user, and execution status.
+The SYSCALL entry includes the parent process ID (ppid), which identifies the process that spawned the current process.
+We can learn why a process is running from analyzing the parent process.
+
+We will use ausearch to look through the audit logs
+
+Questions
+Question 1 - What is the PPID of the suspicious whoami command?
+
+in order to answer this question, we are given a keyword we can look for: "whoami".
+We can run the command: ausearch -i -x "whoami"
+  where the i flag gives you human readable output, and the x flag lets you search for the executabl name.
+
+<img width="1424" height="225" alt="Screenshot 2026-04-05 at 5 48 23 PM" src="https://github.com/user-attachments/assets/6b9007d9-ed89-4df7-90b4-8674b8bbdd34" />
+
+From the picture, we can see the the ppid is 1018
+
+Answer: 1018
+
+Question 2 - Moving up the tree, what is the PID of the TryPingMe app?
+
+We know that the user used the TryPingMe app in order to get to inject his own commands. In order to find the id of trypingme we can go up the process tree similar to the example THM provided.
+
+<img width="1253" height="382" alt="Screenshot 2026-04-05 at 5 50 05 PM" src="https://github.com/user-attachments/assets/22c8fca0-cfaa-4b72-9036-60c8b4a8cf53" />
+
+I continue going up the tree until I reach the TryPingMe app process.
+
+<img width="1427" height="609" alt="Screenshot 2026-04-05 at 5 56 56 PM" src="https://github.com/user-attachments/assets/0d454582-6700-4906-9fbc-47aceb9139c5" />
+
+How do you know that is the app process?
+The proctitle shows /usr/bin/python3 /opt/trypingme/main.py, meaning the Python interpreter (exe=/usr/bin/python3.12) is executing the application’s main script located under /opt/trypingme. This indicates that this process represents the application runtime rather than a child or auxiliary process.
+
+Using -x trypingme will not work because the -x flag filters on the executable (exe field) from the SYSCALL event. In this case, the executable is /usr/bin/python3.12, not trypingme. Therefore, you would need to use -x /usr/bin/python3.12, but this may return many unrelated results since multiple scripts can be executed by the Python interpreter.
+
+An interpreter is a program that translates and executes code line by line at runtime, converting it into machine instructions as it runs. This is what is making your code execute, run.
+
+Answer: 577
+
+Question 3 - Which program did the attacker use to open a reverse shell?
+
+We know that the attacker used TryPingMe to gain access to the system. Let us then analyze what are the child processes of the TryPingMe process by using the following command: 
+ausearch -i --ppid 577
+
+<img width="1423" height="183" alt="Screenshot 2026-04-05 at 6 20 03 PM" src="https://github.com/user-attachments/assets/2dfd1b2e-9fbc-4b8c-9812-af8facbd7646" />
+
 
 
 
