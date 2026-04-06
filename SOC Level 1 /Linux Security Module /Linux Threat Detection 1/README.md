@@ -29,13 +29,19 @@ In this task, we learn that SSH is a very widely used service that allows users 
 However it can be used by attackers to gain access to our systems.
 
 There are two common ways in which you can connect remotely via SSH: Password Authentication and SSH Key-Based Authentication
-* Password Authentication is what we are mostly used to: username and password. We send to the ip address we are logging to the user we want to log into, and the password. If there is an ssh server configured, and if our credentials are correct, then we will be able to remotely log into our system.
-<br />
+
+<ul>
+    <li>
+Password Authentication is what we are mostly used to: username and password. We send to the  ip address we are logging to the user we want to log into, and the password. If there is  an ssh server configured, and if our credentials are correct, then we will be able to remotely log into our system. 
+<br />        
 Password Autentication Syntax: ssh [user]@[ip address], you will then be prompted for the password
-<br />
-* SSH Key-Based Authentication is also known as Passwordless authentication because it relies on keys. There are two keys: Public key and Private key. The public key is for the server and the private key is for the client. In other words, the Public key is kept on the system you want to log into remotely, and the private key is kept on the system you are using to connect remotely. This is a passwordless method because it doesnt really on a password to prove an identity, rather, the cleint proves it owns the Private Key in order to gain connection. Key-Based Authentication is nearly impossible to brute force, making it safer than Password Authentication. However if someone obtains a copy of your Private Key, then your system is compromised. That is why it is best practice to add a passphrase to the Private Key to add an additional layer of defence.
+    </li>
+    <li>
+SH Key-Based Authentication is also known as Passwordless authentication because it relies on keys. There are two keys: Public key and Private key. The public key is for the server and the private key is for the client. In other words, the Public key is kept on the system you want to log into remotely, and the private key is kept on the system you are using to connect remotely. This is a passwordless method because it doesnt really on a password to prove an identity, rather, the cleint proves it owns the Private Key in order to gain connection. Key-Based Authentication is nearly impossible to brute force, making it safer than Password Authentication. However if someone obtains a copy of your Private Key, then your system is compromised. That is why it is best practice to add a passphrase to the Private Key to add an additional layer of defence.
 <br />
 Passwordless Authentication Syntax: ssh [user]@[ip address], unlike above, you will not be prompted by the password.
+    </li>
+</ul>
 <br />
 Hopefully this was usefull reminder of how ssh works!
 
@@ -201,7 +207,7 @@ The + symbol represents a space in URI encoding.
 The attacker is trying to access /opt/trypingme/main.py
 <br />
 <br />
-<h5>Answer: /opt/trypingme/main.py </h5>h5>
+<h5>Answer: /opt/trypingme/main.py </h5>
 <br />
 <h4>Question 2 - Looking inside the opened file, what's the flag you see there?</h4>
 <br />
@@ -307,18 +313,20 @@ This is a Supply Chain Compromise. Trusted apps were compromised to run maliciou
 <h5>Answer: Supply Chain Compromise</h5>
 <br />
 <h4>Question 2 - Which detection method can you use to detect a variety of Initial Access techniques?</h4>
-<br />
-<br />
 <h5>Answer: Process Tree Analysis</h5>
 <br />
 <h2>Conclusion</h2>
 <br />
 In this room we learened:
-* Analysis on authentication logs looking for initial access through services and ssh
-* Process Tree Analysis
-* Advanced Initial Access Techniques
+<br />
+<ul>
+  <li>Analyzed authentication logs to detect initial access via services and SSH</li>
+  <li>Performed process tree analysis to trace attacker activity</li>
+  <li>Studied and identified advanced initial access techniques</li>
+</ul>
 <br />
 Hope this walkthrough was helpful!
+<br />
 On to the next room!
 
     
