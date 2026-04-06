@@ -1,6 +1,6 @@
 <h1> Linux Threat Detection 1 </h1>
 
-Welcome to this walkthrough of the Linux Threat Detection 1 Room from the Linux Security Module part of the SOC Level 1 Path
+Welcome to this walkthrough of the Linux Threat Detection 1 Room from the Linux Security Module part of the SOC Level 1 Path!
 
 This module is similar to the Windows Security Module but for Linux, where we will go through the MITRE attack framework and see how we can find various techniques in a Linux enviroment. 
 
@@ -14,10 +14,10 @@ Let's Begin!
 
 <h2>Task 1 - Introduction</h2>
 Linux is still used in our networks, therefore they are a major means which they get attacked. 
-We must be ready to detect any inital access techniques in our linux system 
+We must be ready to detect any inital access techniques in our linux system. 
 
 It is important you have knowledge of the MITRE Att&ck framework, Linux commands, and how to work with Linux logs.
-It is reccomended to have completed these rooms before continuing with this room
+It is reccomended to have completed a few rooms before continuing with this room.
 
 <h3>Questions:</h3>
 
@@ -32,19 +32,16 @@ There are two common ways in which you can connect remotely via SSH: Password Au
 * Password Authentication is what we are mostly used to: username and password. We send to the ip address we are logging to the user we want to log into, and the password. If there is an ssh server configured, and if our credentials are correct, then we will be able to remotely log into our system.
   Password Autentication Syntax: ssh [user]@[ip address], you will then be prompted for the password
 
-
 * SSH Key-Based Authentication is also known as Passwordless authentication because it relies on keys. There are two keys: Public key and Private key. The public key is for the server and the private key is for the client. In other words, the Public key is kept on the system you want to log into remotely, and the private key is kept on the system you are using to connect remotely. This is a passwordless method because it doesnt really on a password to prove an identity, rather, the cleint proves it owns the Private Key in order to gain connection. Key-Based Authentication is nearly impossible to brute force, making it safer than Password Authentication. However if someone obtains a copy of your Private Key, then your system is compromised. That is why it is best practice to add a passphrase to the Private Key to add an additional layer of defence.
-  Passwordless Authentication Syntax: ssh [user]@[ip address], unlike above, you will not be prompted by the password
-
+  Passwordless Authentication Syntax: ssh [user]@[ip address], unlike above, you will not be prompted by the password.
+<br />
 Hopefully this was usefull reminder of how ssh works!
 
 With this information, we can see that we need to look out for:
   Weak Passwords in Password Authentication and access to our Private Key File
 
-Questions:
-<br />
-Question 1 - When did the ubuntu user log in via SSH for the first time?
-<br />
+<h3>Questions:</h3>
+<h4>Question 1 - When did the ubuntu user log in via SSH for the first time?</h4>
 Answer Example: 2023-09-16.
 
 We need to remember that from the previous room that the way we look for authentication events is through the auth.log logs
@@ -62,16 +59,17 @@ You will see here that the first entry doesnt have the year, however by doing fu
 
 Something that was confusing for me is that how did the format change. If you grep for SSH logs, you can see that the SSH Servce (SSHD) restarted. When SSHD restarted, it could be that the logging system changed. 
 The "Oct 22 08:55:25" logs follow the standard syslog timestamp format typical of the rsyslog system, while the later entries with the year and more accurate time use ISO 8601 format, which is typical of journald. Basically the way logs were processed changed.
-Hope you found this helpful
+<br />
+Hope you found this helpful.
 <img width="1422" height="311" alt="Screenshot 2026-04-04 at 7 21 57 PM" src="https://github.com/user-attachments/assets/93adaa7c-44c4-4c7c-9840-f90c36909d98" />
-Answer: 2024-10-22
+<h5>Answer: 2024-10-22</h5>
 
-Question 2 - Did the ubuntu user use SSH keys instead of a password for the above found date? (Yea/Nay)
+<h4>Question 2 - Did the ubuntu user use SSH keys instead of a password for the above found date? (Yea/Nay)</h4>
 This question is asking whether the user used Password or Keys to authenticate.
 From the screenshot, you can see in the first entry that the authentication method used was 'publickey' meaning SSH Keys.
 You will see at the bottom of the screenshot a succesful authentication via password.
 <img width="1422" height="311" alt="Screenshot 2026-04-04 at 7 21 57 PM" src="https://github.com/user-attachments/assets/93adaa7c-44c4-4c7c-9840-f90c36909d98" />
-Answer: YEA
+<h5>Answer: YEA</h5>
 
 <h2>Task 3 - Detecting SSH Attacks</h2>
 We have seen how a sucessful SSH login looks like. Now, we will learn how to detect whether a login is malicious or not.
@@ -83,10 +81,8 @@ However, with the other logs for jsmith, we can analyze that a password authenti
 
 We will practice this answering the questions on this task.
 
-Questions:
-<br />
-Question 1 - When did the SSH password brute force start?
-<br />
+<h3>Questions:</h3>
+<h4>Question 1 - When did the SSH password brute force start?</h4>
 Answer Format: 2023-09-15.
 
 This question tells us that we are analyzing an SSH brute force attack.
@@ -111,10 +107,9 @@ We can analyze that there are multiple failed attempts in a short amount of time
 
 We can see that there is a Failed Password attempt from 197.39.195.136, but the brute force attack did not begin here. This attempt is not part of the brute force attack since there is only one attempt in a short amount of time. 
 
-Answer: 2025-08-21
+<h5>Answer: 2025-08-21</h5>
 
-Question 2 - Which four users did the botnet attempt to breach?
-<br />
+<h4>Question 2 - Which four users did the botnet attempt to breach?</h4>
 Answer Format: Separate by a comma, in alphabetical order.
 
 From this question we can see that the system is being attacked by a botnet, meaning that the attacker is using multiple ip addresses to brute force.
@@ -139,10 +134,9 @@ We will add "user" to the list
 
 We have found our four users
 
-Answer: root, roy, sol, user
+<h5>Answer: root, roy, sol, user</h5>
 
-Question 3 - Finally, which IP managed to breach the root user?
-<br />
+<h4>Question 3 - Finally, which IP managed to breach the root user?</h4>
 We know of two ip addresses part of the botnet attack: 193.46.255.33 and 80.94.95.112.
 
 We will now filter through the auth.log to look for a sucessul login to the root user from one of these ip addresses
@@ -155,7 +149,7 @@ I ran the same command as in question 2 of this same task:
 cat /var/log/auth.log | grep "ssh" | grep -i "failed"
 <img width="1421" height="177" alt="Screenshot 2026-04-05 at 3 46 37 PM" src="https://github.com/user-attachments/assets/b0d2bebe-63ac-46db-b4b6-601c9c41e86b" />
 
-Answer: 91.224.92.79
+<h5>Answer: 91.224.92.79</h5>
 
 <h2>Task 4 - Initial Access via Services</h2>
 
@@ -166,8 +160,8 @@ In the example of the image, TryPingMe Web Logs, we can see that our web server 
 
 For the questions, we are going to analyze TryPingMe web logs. It seems like TryPingMe is running on a nginx web server. To analyze then the logs, we will find them in /var/log/nginx/access.log
 
-Question 1 - What is the path to the Python file the attacker attempted to open?
-<br />
+<h3>Questions:</h3>
+<h4>Question 1 - What is the path to the Python file the attacker attempted to open?</h4>
 We are told in the question we are looking for a python file. Python files have an extension of .py, so let us search for ".py" in the access.log
 
 <img width="1417" height="136" alt="Screenshot 2026-04-05 at 5 16 00 PM" src="https://github.com/user-attachments/assets/8d809781-39bf-4ad3-a2b9-740e1c702a46" />
@@ -189,9 +183,9 @@ The + symbol represents a space in URI encoding.
 
 The attacker is trying to access /opt/trypingme/main.py
 
-Answer: /opt/trypingme/main.py
+<h5>Answer: /opt/trypingme/main.py </h5>h5>
 
-Question 2 - Looking inside the opened file, what's the flag you see there?
+<h4>Question 2 - Looking inside the opened file, what's the flag you see there?</h4>
 We now need to find the file /opt/trypingme/main.py.
 
 If we simply cat the file we get our answer.
@@ -200,7 +194,7 @@ If we simply cat the file we get our answer.
 
 This question is pretty simple. It could be confusing in where to start to look for the file. We know that the file is in /opt/trypingme/main.py. We can start by using the cat command directly first. 
 
-Answer: THM{i_am_vulnerable!}
+<h5>Answer: THM{i_am_vulnerable!}</h5>
 
 <h2>Task 5 - Detecting Service Breach</h2>
 This task focuses on learning to use process analysis in order to analyze an attacker's potential initial access.
@@ -218,8 +212,8 @@ We can learn why a process is running from analyzing the parent process.
 
 We will use ausearch to look through the audit logs
 
-Questions
-Question 1 - What is the PPID of the suspicious whoami command?
+<h3>Questions:</h3>
+<h4>Question 1 - What is the PPID of the suspicious whoami command?</h4>
 
 in order to answer this question, we are given a keyword we can look for: "whoami".
 We can run the command: ausearch -i -x "whoami"
@@ -229,9 +223,9 @@ We can run the command: ausearch -i -x "whoami"
 
 From the picture, we can see the the ppid is 1018
 
-Answer: 1018
+<h5>Answer: 1018</h5>
 
-Question 2 - Moving up the tree, what is the PID of the TryPingMe app?
+<h4>Question 2 - Moving up the tree, what is the PID of the TryPingMe app?</h4>
 
 We know that the user used the TryPingMe app in order to get to inject his own commands. In order to find the id of trypingme we can go up the process tree similar to the example THM provided.
 
@@ -248,9 +242,9 @@ Using -x trypingme will not work because the -x flag filters on the executable (
 
 An interpreter is a program that translates and executes code line by line at runtime, converting it into machine instructions as it runs. This is what is making your code execute, run.
 
-Answer: 577
+<h5>Answer: 577</h5>
 
-Question 3 - Which program did the attacker use to open a reverse shell?
+<h4>Question 3 - Which program did the attacker use to open a reverse shell?</h4>
 
 We know that the attacker used TryPingMe to gain access to the system. Let us then analyze what are the child processes of the TryPingMe process by using the following command: 
 ausearch -i --ppid 577
@@ -266,7 +260,7 @@ This is the beginning of a Python reverse shell payload:
 
 In fact, we can see the full command in the image in Task 4, Question 1.
 
-Answer: Python
+<h5>Answer: Python</h5>
 
 <h2>Task 6 - Advanced Initial Access</h2>
 
@@ -278,14 +272,15 @@ A well-known example is the Stuxnet attack, in which attackers weaponized legiti
 
 In order to detect these attack, we need to analyze the process tree.
 
-Questions 
-Question 1 - Which Initial Access technique is likely used if a trusted app suddenly runs malicious commands?
+<h3>Questions:</h3>
+<h4>Question 1 - Which Initial Access technique is likely used if a trusted app suddenly runs malicious commands?</h4>
 This is a Supply Chain Compromise. Trusted apps were compromised to run malicious code.
 
-Answer: Supply Chain Compromise
+<h5>Answer: Supply Chain Compromise</h5>
 
-Question 2 - Which detection method can you use to detect a variety of Initial Access techniques?
-Answer: Process Tree Analysis 
+<h4>Question 2 - Which detection method can you use to detect a variety of Initial Access techniques?</h4>
+
+<h5>Answer: Process Tree Analysis</h5>
 
 <h2>Conclusion</h2>
 
@@ -295,5 +290,6 @@ In this room we learened:
 * Advanced Initial Access Techniques
   
 Hope this walkthrough was helpful!
+On to the next room!
 
     
