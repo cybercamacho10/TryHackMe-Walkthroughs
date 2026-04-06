@@ -17,7 +17,14 @@ Practicing detection and incident response through platforms like TryHackMe and 
 Building and documenting labs focused on SIEM, endpoint telemetry, and attack techniques
 Expanding my knowledge in cloud security and detection engineering.
 
-<h2>Certifications</h2>
+If accepted I plan on beggining my Masters in Cybsecurity in Georgia Tech in the fall.
+
+I plan on obtaining my CySA+ and HTB CDSA by the end of the Summer.
+
+If you want to message me about questions or anything please connect with me through LinkedIn
+https://www.linkedin.com/in/josephjuancamacho/
+
+<h2>Currnt Certifications</h2>
 <ul>
   <li><strong>CompTIA Security+</strong></li>
   <li><strong>CompTIA Network+</strong></li>
@@ -35,4 +42,4 @@ Expanding my knowledge in cloud security and detection engineering.
 </ul>
 
 <h2>Goal</h2>
-I’m currently seeking an entry-level cybersecurity role where I can contribute, continue learning, and grow within a team focused on security operations and defense.
+I’m currently seeking a cybersecurity role where I can contribute, continue learning, and grow within a team focused on security operations and defense.
