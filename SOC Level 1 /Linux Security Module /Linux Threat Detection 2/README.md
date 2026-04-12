@@ -115,5 +115,38 @@ Task Template
 <p> We tan two commands which told us that this computer is running in an amazon virtual enviroment and the location of the antivirus software </p>
 <p> We have discovered information of this device </p>
 
+<!------------------------------------------------------------------------------------------------------------------------------------------->
+
+<h2>Task 3 - Detecting Discovery</h2>
+
+<p> Once an attacker gets general information about the system he is in, he will then try to gain more specific discovery where he is going to find what information he can take. </p>
+<p> These commands could involve looking for passwords, GPU information, or network scans to find additional potential victims </p>
+<br />
+<p> It is important to have auditl configured to alert when some of these well known Discovery commands are being used </p>
+<p> The context of an command is the key to know whether it was used maliciously: who ran it, when, how are importnat questions to answer. </p>
+<p> Only way to get context of a command is through analysis, which involves analyzing the parent process </p>
+
+<h3>Questions:</h3>
+
+<h4>Question 1 - What is the path of the script that initiated the "hostname" command?</h4>
+<p> We know that the <i>itsupport</i> user launched the <i>hostname</i> process </p>
+<br />
+<p> I will use ausearch to analyze the auditl logs </p>
+
+<p> Since we are looking for the hostname process, we can simply look for this process using the -x flag </p>
+<p> We will use the: <i> ausearch -i -x hostname </i> command </p>
+
+<img width="1419" height="222" alt="Screenshot 2026-04-12 at 3 56 20 PM" src="https://github.com/user-attachments/assets/44ea69b3-9834-4c38-8354-b8c98dfc209d" />
+
+<p> Using the results of this command, we have found that the parent process of this command is 3771 </p>
+
+<p> If we know look for the parent process using the --pid flag, we get the following result </p>
+
+<img width="1423" height="197" alt="Screenshot 2026-04-12 at 3 58 39 PM" src="https://github.com/user-attachments/assets/d0fcfe00-29d8-4bae-bc67-176c997be4fb" />
+
+To recap the information that auditl provides:
+
+
+<h5>Answer: No answer needed</h5>
 
 
